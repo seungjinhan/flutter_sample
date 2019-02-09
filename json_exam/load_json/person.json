@@ -1,0 +1,31 @@
+[{
+    "name": "Han sj",
+    "age": "40",
+    "height": "165",
+    "gender": "male",
+    "hair_color": "black"
+}, {
+    "name": "Kim pl",
+    "age": "23",
+    "height": "164",
+    "gender": "femail",
+    "hair_color": "red"
+}, {
+    "name": "Konaa",
+    "age": "33",
+    "height": "170",
+    "gender": "male",
+    "hair_color": "black"
+}, {
+    "name": "Time",
+    "age": "10",
+    "height": "122",
+    "gender": "female",
+    "hair_color": "black"
+}, {
+    "name": "Jack",
+    "age": "35",
+    "height": "175",
+    "gender": "male",
+    "hair_color": "Pink"
+}]
