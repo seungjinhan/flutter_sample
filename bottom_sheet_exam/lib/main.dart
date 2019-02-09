@@ -60,9 +60,9 @@ class _HomePageState extends State<HomePage> {
         context: context,
         builder: (builder) {
           return Container(
-            color: Colors.green,
+            color: Colors.pink,
             child: Center(
-              child: Text("Good"),
+              child: Text("modal"),
             ),
           );
         });
