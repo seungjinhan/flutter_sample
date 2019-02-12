@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:tic_tac_toe_exam/ui/g_button.dart';
+import 'package:tic_tac_toe_exam/ui/ttt_button.dart';
 import 'package:tic_tac_toe_exam/ui/message_box.dart';
 
 class HomePage extends StatefulWidget {
@@ -12,59 +12,72 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   TextEditingController tec;
-  List<GButton> btnList;
+  List<TTTBtn> btnList;
   var player1;
   var player2;
   var activePalyer;
-  List<GButton> _makeButton() {
+  List<TTTBtn> _makeButton() {
     player1 = List();
     player2 = List();
     activePalyer = 1;
 
-    var gb = <GButton>[
-      GButton(id: 1),
-      GButton(id: 2),
-      GButton(id: 3),
-      GButton(id: 4),
-      GButton(id: 5),
-      GButton(id: 6),
-      GButton(id: 7),
-      GButton(id: 8),
-      GButton(id: 9),
+    var gb = <TTTBtn>[
+      TTTBtn(id: 1),
+      TTTBtn(id: 2),
+      TTTBtn(id: 3),
+      TTTBtn(id: 4),
+      TTTBtn(id: 5),
+      TTTBtn(id: 6),
+      TTTBtn(id: 7),
+      TTTBtn(id: 8),
+      TTTBtn(id: 9),
     ];
     return gb;
   }
 
-  void run(GButton btn) {
+  void run(TTTBtn btn) {
     setState(() {
       if (activePalyer == 1) {
         btn.text = "X";
-        btn.bg = Colors.red;
+        btn.bg = Colors.deepOrangeAccent;
         activePalyer = 2;
         player1.add(btn.id);
-        tec.text = "Player 2";
+        tec.text = "Phone";
       } else {
         btn.text = "O";
-        btn.bg = Colors.teal;
+        btn.bg = Colors.purple;
         activePalyer = 1;
         player2.add(btn.id);
-        tec.text = "Player 1";
+        tec.text = "You";
       }
 
       btn.enabled = false;
 
-      int winner = checkGame();
-      if (winner == -1) {
-        if (btnList.every((p) => p.text != "")) {
-          showDialog(context: context, builder: (_) => MessageBox("Game over", "Pree the reset", resetGame));
-        } else {
-          activePalyer == 2 ? autoPlay() : null;
+      showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (_) => Center(
+              child: CircularProgressIndicator(),
+            ),
+      );
+
+      new Future.delayed(new Duration(seconds: 1), () {
+        Navigator.pop(context); //pop dialog
+
+        int winner = checkGame();
+
+        if (winner == -1) {
+          if (btnList.every((p) => p.text != "")) {
+            showDialog(context: context, builder: (_) => MessageBox("Game over", "again", resetGame));
+          } else {
+            activePalyer == 2 ? phoneRun() : null;
+          }
         }
-      }
+      });
     });
   }
 
-  void autoPlay() {
+  void phoneRun() {
     var emptyCells = List();
     var list = List.generate(9, (i) => i + 1);
     for (var cellId in list) {
@@ -80,17 +93,48 @@ class _HomePageState extends State<HomePage> {
     run(btnList[i]);
   }
 
+  int _check(int a, int b, int c) {
+    var winner = -1;
+    if (player1.contains(a) && player1.contains(b) && player1.contains(c)) {
+      winner = 1;
+    } else if (player2.contains(a) && player2.contains(b) && player2.contains(c)) {
+      winner = 2;
+    }
+
+    return winner;
+  }
+
   int checkGame() {
     var winner = -1;
-    if (player1.contains(1) && player1.contains(2) && player1.contains(3)) {
-      winner = 1;
+
+    winner = _check(1, 2, 3);
+    if (winner == -1) {
+      winner = _check(4, 5, 6);
+      if (winner == -1) {
+        winner = _check(7, 8, 9);
+        if (winner == -1) {
+          winner = _check(1, 4, 7);
+          if (winner == -1) {
+            winner = _check(2, 5, 8);
+            if (winner == -1) {
+              winner = _check(3, 6, 9);
+              if (winner == -1) {
+                winner = _check(1, 5, 9);
+                if (winner == -1) {
+                  winner = _check(3, 5, 7);
+                }
+              }
+            }
+          }
+        }
+      }
     }
 
     if (winner != -1) {
       if (winner == 1) {
-        showDialog(context: context, builder: (_) => MessageBox("player 1 win", "Press the reset", resetGame));
+        showDialog(context: context, builder: (_) => MessageBox("You win", "Press the reset", resetGame));
       } else {
-        showDialog(context: context, builder: (_) => MessageBox("player 2 win", "Press the reset", resetGame));
+        showDialog(context: context, builder: (_) => MessageBox("Phone win", "Press the reset", resetGame));
       }
     }
 
@@ -103,6 +147,7 @@ class _HomePageState extends State<HomePage> {
     }
     setState(() {
       btnList = _makeButton();
+      tec.text = "You";
     });
   }
 
@@ -111,6 +156,7 @@ class _HomePageState extends State<HomePage> {
     super.initState();
     this.btnList = _makeButton();
     this.tec = TextEditingController();
+    tec.text = "You";
   }
 
   @override
@@ -118,6 +164,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Tic Tac Toe"),
+        centerTitle: true,
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
