@@ -5,6 +5,7 @@ class CallApi {
   static List<Cat> catListFromJson(String jsonData) {
     List<Cat> catList = [];
     json.decode(jsonData)['cats'].forEach((cat) => catList.add(_catObj(cat)));
+    return catList;
   }
 
   static Cat _catObj(Map<String, dynamic> map) {
@@ -17,6 +18,7 @@ class CallApi {
       likeCounter: map['like_counter'],
       isAdopted: map['adopted'],
       pictures: List<String>.from(map['pictures']),
+      cattributes: List<String>.from(map['cattributes']),
     );
   }
 }
