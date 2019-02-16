@@ -2,19 +2,15 @@ import 'package:cat_box_exam/ui/cat_list.dart';
 import 'package:flutter/material.dart';
 
 void main() async {
-  runApp(CatBoxApp());
+  runApp(new CatBoxApp());
 }
 
 class CatBoxApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        accentColor: Colors.pinkAccent,
-        fontFamily: 'Ubuntu',
-      ),
-      home: CatList(),
+    return new MaterialApp(
+      theme: new ThemeData(primarySwatch: Colors.blue, accentColor: Colors.pinkAccent, fontFamily: 'Ubuntu'),
+      home: new CatList(),
     );
   }
 }
