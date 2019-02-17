@@ -1,106 +1,131 @@
 import 'package:cat_box_exam/models/cat.dart';
+import 'package:cat_box_exam/ui/cat_details/header/cut_colored_image.dart';
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 
-class CatDetailsHeader extends StatefulWidget {
-  final Cat _cat;
-  final Object aTag;
+class CatDetailHeader extends StatefulWidget {
+  final Cat cat;
+  final Object avatarTag;
 
-  CatDetailsHeader(this._cat, {@required this.aTag});
+  CatDetailHeader(
+    this.cat, {
+    @required this.avatarTag,
+  });
 
   @override
-  _CatDetailsHeaderState createState() => _CatDetailsHeaderState();
+  _CatDetailHeaderState createState() => new _CatDetailHeaderState();
 }
 
-class _CatDetailsHeaderState extends State<CatDetailsHeader> {
+class _CatDetailHeaderState extends State<CatDetailHeader> {
+  static const BACKGROUND_IMAGE = 'images/profile_header_background.png';
+
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
     var textTheme = theme.textTheme;
+    var screenWidth = MediaQuery.of(context).size.width;
 
-    var avatar = Hero(
-      child: CircleAvatar(
-        backgroundImage: NetworkImage(widget._cat.avatarUrl),
-        radius: 75.0,
+    var diagonalBackground = new DiagonallyCutColoredImage(
+      new Image.asset(
+        BACKGROUND_IMAGE,
+        width: screenWidth,
+        height: 280.0,
+        fit: BoxFit.cover,
       ),
-      tag: widget.aTag,
+      color: const Color(0xBB42A5F5),
     );
 
-    var likeInfo = Padding(
+    var avatar = new Hero(
+      tag: widget.avatarTag,
+      child: new CircleAvatar(
+        backgroundImage: new NetworkImage(widget.cat.avatarUrl),
+        radius: 75.0,
+      ),
+    );
+
+    var likeInfo = new Padding(
       padding: const EdgeInsets.only(top: 16.0),
-      child: Row(
+      child: new Row(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Icon(
+        children: [
+          new Icon(
             Icons.thumb_up,
-            size: 16.0,
             color: Colors.white,
+            size: 16.0,
           ),
-          Padding(
-            padding: const EdgeInsets.only(
-              left: 8.0,
-            ),
-            child: Text(
-              widget._cat.likeCounter.toString(),
-              style: TextStyle(color: Colors.white),
-            ),
-          )
+          new Padding(
+              padding: const EdgeInsets.only(left: 8.0),
+              child: new Text(
+                widget.cat.likeCounter.toString(),
+                style: textTheme.subhead.copyWith(color: Colors.white),
+              ))
         ],
       ),
     );
 
-    var actionButton = Padding(
+    var actionButtons = new Padding(
       padding: const EdgeInsets.only(
         top: 16.0,
         left: 16.0,
         right: 16.0,
       ),
-      child: Row(
+      child: new Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: <Widget>[
-          ClipRRect(
-            borderRadius: BorderRadius.circular(30.0),
-            child: MaterialButton(
+        children: [
+          new ClipRRect(
+            borderRadius: new BorderRadius.circular(30.0),
+            child: new MaterialButton(
               minWidth: 140.0,
               color: theme.accentColor,
               textColor: Colors.white,
-              onPressed: () async {},
-              child: Text("Adopt Me"),
+              onPressed: () async {
+                //TODO Handle Adopt
+              },
+              child: new Text('ADOPT ME'),
             ),
           ),
-          ClipRRect(
-            borderRadius: BorderRadius.circular(30.0),
-            child: RaisedButton(
+          new ClipRRect(
+            borderRadius: new BorderRadius.circular(30.0),
+            child: new RaisedButton(
               color: Colors.lightGreen,
               disabledColor: Colors.grey,
               textColor: Colors.white,
-              onPressed: () async {},
-              child: Text("LIKE"),
+              onPressed: () async {
+                //TODO Handle Like
+              },
+              child: new Text('LIKE'),
             ),
-          )
+          ),
         ],
       ),
     );
-    return Stack(
-      children: <Widget>[
-        Align(
+
+    return new Stack(
+      children: [
+        diagonalBackground,
+        new Align(
           alignment: FractionalOffset.bottomCenter,
           heightFactor: 1.4,
-          child: Column(
-            children: <Widget>[
+          child: new Column(
+            children: [
               avatar,
               likeInfo,
-              actionButton,
+              actionButtons,
             ],
           ),
         ),
-        Positioned(
+        new Positioned(
           top: 26.0,
           left: 4.0,
+<<<<<<< HEAD
           child: BackButton(
             color: Colors.yellowAccent,
           ),
         )
+=======
+          child: new BackButton(color: Colors.white),
+        ),
+>>>>>>> 0f24d80b013ff77c2881b8b948d5c0fb9d15c8ce
       ],
     );
   }

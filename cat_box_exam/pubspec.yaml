@@ -1,15 +1,11 @@
-name: cat_box_exam
-description: A new Flutter project.
-
-version: 1.0.0+1
-
-environment:
-  sdk: ">=2.0.0-dev.68.0 <3.0.0"
+name: catbox
+description: View cats that are up for adoption.
 
 dependencies:
   flutter:
     sdk: flutter
 
+<<<<<<< HEAD
   font_awesome_flutter: 
   firebase_core: 0.1.0
   firebase_auth: 0.5.3
@@ -17,20 +13,27 @@ dependencies:
   cloud_firestore: 0.3.0
   version:
   cupertino_icons: ^0.1.2
+=======
+  firebase_core: "0.1.0"
+  firebase_auth: "0.5.3"
+  google_sign_in: "3.0.0"
+  cloud_firestore: "0.3.0"
+  font_awesome_flutter: "6.0.0"
+>>>>>>> 0f24d80b013ff77c2881b8b948d5c0fb9d15c8ce
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
-
 flutter:
   uses-material-design: true
-
-  assets:
-    - assets/cats.json
 
   fonts:
     - family: Ubuntu
       fonts:
         - asset: fonts/Ubuntu-Regular.ttf
         - asset: fonts/Ubuntu-Bold.ttf
+
+  assets:
+    - assets/cats.json
+    - images/profile_header_background.png
