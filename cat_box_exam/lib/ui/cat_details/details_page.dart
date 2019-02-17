@@ -23,8 +23,8 @@ class _CatDetailsPageState extends State<CatDetailsPage> {
         begin: FractionalOffset.centerRight,
         end: FractionalOffset.bottomLeft,
         colors: [
-          Colors.blue,
-          Colors.blue,
+          Colors.deepPurpleAccent,
+          Colors.deepOrangeAccent,
         ],
       ),
     );

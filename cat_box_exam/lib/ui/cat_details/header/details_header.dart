@@ -98,7 +98,7 @@ class _CatDetailsHeaderState extends State<CatDetailsHeader> {
           top: 26.0,
           left: 4.0,
           child: BackButton(
-            color: Colors.white,
+            color: Colors.yellowAccent,
           ),
         )
       ],

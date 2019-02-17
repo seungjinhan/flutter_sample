@@ -13,14 +13,27 @@ class CatList extends StatefulWidget {
 class _CatListState extends State<CatList> {
   List<Cat> _catList = [];
 
+  CallApi _api;
+  NetworkImage _profileImage;
+
   @override
   void initState() {
     super.initState();
     _getCatList();
+    _loadFromFirebase();
+  }
+
+  _loadFromFirebase() async {
+    final api = await CallApi.signInWithGoogle();
+    setState(() {
+      _api = api;
+      _profileImage = NetworkImage(api.firebase_user.photoUrl);
+    });
   }
 
   _getCatList() async {
     String jsonFile = await DefaultAssetBundle.of(context).loadString("assets/cats.json");
+    print(jsonFile);
     setState(() {
       _catList = CallApi.catListFromJson(jsonFile);
     });
@@ -31,6 +44,27 @@ class _CatListState extends State<CatList> {
     return Scaffold(
       backgroundColor: Colors.blue,
       body: _getBody(),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        tooltip: _api != null ? 'Signed-in' + _api.firebase_user.displayName : 'Not signed in',
+        backgroundColor: Colors.blue,
+        child: CircleAvatar(
+          backgroundImage: _profileImage,
+          radius: 50.0,
+        ),
+      ),
+    );
+  }
+
+  Widget _getBody() {
+    return new Container(
+      margin: const EdgeInsets.fromLTRB(8.0, 56.0, 8.0, 0.0),
+      child: Column(
+        children: <Widget>[
+          _getListTileUI(),
+          _getListView(),
+        ],
+      ),
     );
   }
 
@@ -39,22 +73,6 @@ class _CatListState extends State<CatList> {
       'Cats',
       style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 32.0),
     );
-  }
-
-  Future<Null> refrech() {
-    _getCatList();
-    return Future<Null>.value();
-  }
-
-  _navigatoToCatDetails(Cat cat, Object aTag) {
-    Navigator.of(context).push(Routers(
-        builder: (context) {
-          return CatDetailsPage(
-            cat,
-            aTag: aTag,
-          );
-        },
-        settings: RouteSettings()));
   }
 
   Widget _getListView() {
@@ -98,15 +116,19 @@ class _CatListState extends State<CatList> {
     );
   }
 
-  Widget _getBody() {
-    return new Container(
-      margin: const EdgeInsets.fromLTRB(8.0, 56.0, 8.0, 0.0),
-      child: Column(
-        children: <Widget>[
-          _getListTileUI(),
-          _getListView(),
-        ],
-      ),
-    );
+  Future<Null> refrech() {
+    _getCatList();
+    return Future<Null>.value();
+  }
+
+  _navigatoToCatDetails(Cat cat, Object aTag) {
+    Navigator.of(context).push(Routers(
+        builder: (context) {
+          return CatDetailsPage(
+            cat,
+            aTag: aTag,
+          );
+        },
+        settings: RouteSettings()));
   }
 }
