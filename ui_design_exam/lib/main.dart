@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ui_design_exam/login.dart';
 
 void main() => runApp(MyApp());
 
@@ -102,20 +103,29 @@ class MyHomePage extends StatelessWidget {
                       right: 10.0,
                       top: 10.0,
                     ),
-                    child: Container(
-                      alignment: Alignment.center,
-                      height: 60.0,
-                      decoration: BoxDecoration(
-                        color: Color(
-                          0xFF18D191,
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => LoginPage(),
+                            ));
+                      },
+                      child: Container(
+                        alignment: Alignment.center,
+                        height: 60.0,
+                        decoration: BoxDecoration(
+                          color: Color(
+                            0xFF18D191,
+                          ),
+                          borderRadius: BorderRadius.circular(10.0),
                         ),
-                        borderRadius: BorderRadius.circular(10.0),
-                      ),
-                      child: Text(
-                        "Sign In with Email",
-                        style: TextStyle(
-                          fontSize: 20.0,
-                          color: Colors.white,
+                        child: Text(
+                          "Sign In with Email",
+                          style: TextStyle(
+                            fontSize: 20.0,
+                            color: Colors.white,
+                          ),
                         ),
                       ),
                     ),

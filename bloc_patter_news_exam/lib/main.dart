@@ -24,6 +24,7 @@ initApp() async {
     await prefs.setInt('color', 0xFF26A69A);
     await prefs.setString('theme', 'light');
     await prefs.setBool('browser', true);
+
   } else if (prefs.getBool('firtStart') == false) {
     color = prefs.getInt('color');
     theme = prefs.getString('theme');
