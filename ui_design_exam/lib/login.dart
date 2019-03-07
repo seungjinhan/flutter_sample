@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ui_design_exam/home.dart';
 import 'package:ui_design_exam/stacked_icons.dart';
 
 class LoginPage extends StatelessWidget {
@@ -64,18 +65,28 @@ class LoginPage extends StatelessWidget {
                       right: 5.0,
                       top: 10.0,
                     ),
-                    child: Container(
-                      alignment: Alignment.center,
-                      height: 60.0,
-                      decoration: BoxDecoration(
-                        color: Colors.blue,
-                        borderRadius: BorderRadius.circular(10.0),
-                      ),
-                      child: Text(
-                        "Login",
-                        style: TextStyle(
-                          fontSize: 20.0,
-                          color: Colors.white,
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => HomePage(),
+                          ),
+                        );
+                      },
+                      child: Container(
+                        alignment: Alignment.center,
+                        height: 60.0,
+                        decoration: BoxDecoration(
+                          color: Colors.blue,
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
+                        child: Text(
+                          "Login",
+                          style: TextStyle(
+                            fontSize: 20.0,
+                            color: Colors.white,
+                          ),
                         ),
                       ),
                     ),
