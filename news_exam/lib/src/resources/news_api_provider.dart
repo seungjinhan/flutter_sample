@@ -22,6 +22,9 @@ class NewsApiPrivider implements Source {
     final res = await client.get('$_root/item/$id.json');
     final parsedJson = json.decode(res.body);
 
-    return ItemModel.fromJson(parsedJson);
+    ItemModel result = ItemModel.fromJson(parsedJson);
+
+    print(result);
+    return result;
   }
 }

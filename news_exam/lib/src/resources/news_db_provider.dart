@@ -14,7 +14,7 @@ class NewsDbProvicer implements Source, Cache {
 
   void init() async {
     Directory dir = await getApplicationDocumentsDirectory();
-    final path = join(dir.path, 'items.db');
+    final path = join(dir.path, 'items5.db');
     db = await openDatabase(path, version: 1, onCreate: (Database newDb, int version) {
       newDb.execute('''
         CREATE TABLE Items ( 
@@ -45,12 +45,13 @@ class NewsDbProvicer implements Source, Cache {
   @override
   Future<ItemModel> fetchItem(int id) async {
     final maps = await db.query(
-      'Itens',
+      'Items',
       columns: null,
       where: 'id = ?',
       whereArgs: [id],
     );
 
+    print('TTT ${maps.length}');
     if (maps.length > 0) {
       return ItemModel.fromDB(maps.first);
     }
@@ -60,7 +61,11 @@ class NewsDbProvicer implements Source, Cache {
 
   @override
   Future<int> addItem(ItemModel item) async {
-    return await db.insert('Items', item.toMap());
+    return await db.insert(
+      'Items',
+      item.toMap(),
+      conflictAlgorithm: ConflictAlgorithm.ignore,
+    );
   }
 }
 

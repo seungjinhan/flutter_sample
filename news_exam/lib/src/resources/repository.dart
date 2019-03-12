@@ -24,17 +24,29 @@ class Repository {
 
   Future<ItemModel> fetchItem(int id) async {
     ItemModel item;
-    Source source;
+    var source;
+    var idx = 0;
+    print('size : ${sources.length}');
+    
     for (source in sources) {
+      print('idx ${idx}');
       item = await source.fetchItem(id);
       if (item != null) {
+        print('kkk');
         break;
       }
+      print('result : ${idx}');
+      idx++;
     }
 
+    print('@@@');
     for (var cache in caches) {
-      cache.addItem(item);
+      print('cache ${cache}');
+      if (cache != source) {
+        cache.addItem(item);
+      }
     }
+    print(item);
     return item;
     //   var item = await dbProvider.fetchItem(id);
     //   if (item != null) {
