@@ -51,7 +51,6 @@ class NewsDbProvicer implements Source, Cache {
       whereArgs: [id],
     );
 
-    print('TTT ${maps.length}');
     if (maps.length > 0) {
       return ItemModel.fromDB(maps.first);
     }
